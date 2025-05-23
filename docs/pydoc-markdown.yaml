@@ -1,0 +1,161 @@
+loaders:
+  - type: python
+    search_path: [../]
+
+processors:
+  - type: filter
+  - type: google
+  - type: crossref
+  - type: custom_doc_processor.TorchMXProcessor
+
+hooks:
+  pre-render:
+    - cp ../Readme.md sources/index.md
+
+renderer:
+  type: mkdocs
+  markdown:
+    # render_toc: true
+    source_linker:
+      type: github
+      repo: rain-neuromorphics/torchmx
+      use_branch: true
+    source_position: before signature
+    source_format: |
+      <span style="float: right; font-size: 90%;">
+      [[view source]]({url})
+      </span>
+  pages:
+    - title: Home
+      name: index
+      source: sources/index.md
+    - title: Examples
+      name: examples
+      children:
+        - title: MX Matmul
+          name: mx_matmul
+          source: sources/examples/mx_matmul.md
+        - title: Quantize Linear
+          name: quantize_linear
+          source: sources/examples/quantize_linear.md
+        - title: Quantize Llama
+          name: quantize_llama
+          source: sources/examples/quantize_llama.md
+    - title: Results
+      name: results
+      children:
+        - title: Llama3.1 Results
+          name: llama3.1 results
+          source: sources/results/llama31.md
+    # User API
+    - title: User API Reference
+      name: user_docs
+      children:
+        - title: User API Home
+          name: User API Home
+          source: sources/user_api_home.md
+        - title: torchmx.mx_tensor
+          name: mx_tensor
+          contents:
+            [
+              torchmx.mx_tensor.MXTensor.to_mx,
+              torchmx.mx_tensor.MXTensor.to_dtype,
+            ]
+        - title: torchmx.quant_api
+          name: quant_api
+          contents:
+            [torchmx.quant_api.quantize_llm_, torchmx.quant_api.quantize_linear_]
+        - title: torchmx.config
+          name: config
+          contents:
+            [torchmx.config.*]
+        - title: torchmx.utils
+          name: utils
+          contents:
+            [torchmx.utils.*]
+        - title: torchmx.dtypes
+          name: dtypes
+          source: sources/dtypes.md
+        - title: torchmx.env_variables
+          name: env_variables
+          source: sources/env_variables.md
+
+    # Developer API
+    - title: Developer API Reference
+      name: dev_docs
+      children:
+        - title: Developer API Home
+          name: Developer API Home
+          source: sources/developer_api_home.md
+        - title: torchmx.config
+          name: config
+          contents: [torchmx.config.*]
+        - title: torchmx.custom_float_cast
+          name: custom_float_cast
+          contents: [torchmx.custom_float_cast.*]
+        - title: torchmx.mx_quantization_utils
+          name: mx_quantization_utils
+          contents: [torchmx.mx_quantization_utils.*]
+        - title: torchmx.mx_tensor
+          name: mx_tensor
+          contents: [torchmx.mx_tensor.*]
+        - title: torchmx.ops
+          name: ops
+          contents: [torchmx.ops.*]
+        - title: torchmx.quant_api
+          name: quant_api
+          contents: [torchmx.quant_api.*]
+        - title: torchmx.utils
+          name: utils
+          contents: [torchmx.utils.*]
+        - title: torchmx.dtypes
+          name: dtypes
+          source: sources/dtypes.md
+        - title: torchmx.env_variables
+          name: env_variables
+          source: sources/env_variables.md
+  mkdocs_config:
+    site_name: torchmx Documentation
+    site_description: PyTorch Quantization Framework For OCP MX Datatypes.
+    repo_name: torchmx
+    repo_url: https://github.com/rain-neuromorphics/torchmx
+    plugins:
+      - search
+    markdown_extensions:
+      - pymdownx.superfences  # Enables syntax highlighting for Python and other languages
+      - pymdownx.highlight:
+          linenums: true       # Adds line numbers to code blocks
+          anchor_linenums: true  # Allows clicking on line numbers
+      - pymdownx.inlinehilite  # Enables inline code highlighting
+      - pymdownx.snippets      # Supports reusable code snippets
+      - pymdownx.tabbed:
+          alternate_style: true  # Enables tabbed content (useful for multi-language docs)
+    theme:
+      name: material
+      palette:
+        - media: "(prefers-color-scheme: light)"
+          scheme: default
+          primary: blue
+          accent: cyan
+          toggle:
+            icon: material/weather-night
+            name: Switch to dark mode
+        - media: "(prefers-color-scheme: dark)"
+          scheme: slate
+          primary: blue
+          accent: cyan
+          toggle:
+            icon: material/white-balance-sunny
+            name: Switch to light mode
+      features:
+        - navigation.tabs
+        - navigation.expand
+        - navigation.top
+        - search.suggest
+        - search.highlight
+        - search.share
+        - content.code.copy
+        - content.code.annotate
+      font:
+        text: Roboto
+        code: Roboto Mono

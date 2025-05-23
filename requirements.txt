@@ -1,0 +1,12 @@
+torch>=2.5.1
+torchao==0.6.1
+tabulate
+pytest
+transformers==4.44.2
+flaky
+attrs
+mkdocs>=1.6.1
+mkdocs-material>=9.6.5
+pydoc-markdown>=4.8.2
+setuptools
+pre-commit
