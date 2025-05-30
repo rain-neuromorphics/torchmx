@@ -1203,7 +1203,7 @@
 <p><a id="torchmx.quant_api.quantize_linear_"></a></p>
 <h4 id="quantize_linear_">quantize_linear_</h4>
 <p><span style="float: right; font-size: 90%;">
-<a href="https://github.com/rain-neuromorphics/torchmx/blob/abhijit/add-contrib/docs/../torchmx/quant_api.py#L188">[view source]</a>
+<a href="https://github.com/rain-neuromorphics/torchmx/blob/main/docs/../torchmx/quant_api.py#L188">[view source]</a>
 </span></p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">quantize_linear_</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span> <span class="n">qconfig</span><span class="p">:</span> <span class="n">QLinearConfig</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
@@ -1218,7 +1218,7 @@ as we do not quantize QKV and other stuff. Use this only when a specific attenti
 <p><a id="torchmx.quant_api.quantize_llm_"></a></p>
 <h4 id="quantize_llm_">quantize_llm_</h4>
 <p><span style="float: right; font-size: 90%;">
-<a href="https://github.com/rain-neuromorphics/torchmx/blob/abhijit/add-contrib/docs/../torchmx/quant_api.py#L218">[view source]</a>
+<a href="https://github.com/rain-neuromorphics/torchmx/blob/main/docs/../torchmx/quant_api.py#L218">[view source]</a>
 </span></p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
 <span class="normal"><a href="#__codelineno-1-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">quantize_llm_</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span> <span class="n">qattention_config</span><span class="p">:</span> <span class="n">QAttentionConfig</span><span class="p">,</span>
