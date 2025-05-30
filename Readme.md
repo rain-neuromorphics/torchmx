@@ -99,7 +99,7 @@ If you find the `torchmx` library useful, please cite it in your work as below.
 ```bibtex
 @software{torchmx,
   title = {torchmx: PyTorch quantization framework for OCP MX datatypes},
-  authors = {Abhijit Balaji, Marios Fournarakis, TorchMX maintainers and contributors},
+  authors = {Abhijit Balaji, Marios Fournarakis, Farshid Varno, Mohammed Fouda, Alex Conklin, TorchMX maintainers and contributors},
   url = {https://github.com/rain-neuromorphics/torchmx},
   license = {MIT License},
   month = May,
