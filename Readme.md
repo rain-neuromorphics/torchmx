@@ -1,6 +1,7 @@
 # TorchMX: PyTorch Quantization Framework For OCP MX Datatypes
 
 ![BUILD](https://github.com/rain-neuromorphics/torchmx/actions/workflows/pytest.yml/badge.svg)
+[![Docs](https://img.shields.io/badge/docs-online-blue)](http://rain-neuromorphics.com/torchmx/)
 
 This package a simulation tool implementing the MX quantization format specified in the
 [OCP Micro Scaling Formats](https://www.opencompute.org/documents/ocp-microscaling-formats-mx-v1-0-spec-final-pdf). The pacakage includes:
