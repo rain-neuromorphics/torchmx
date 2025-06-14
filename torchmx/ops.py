@@ -5,6 +5,7 @@ This also includes the aten ops that are implemented for the MXTensor class.
 from copy import deepcopy
 
 import torch
+from torch.utils._python_dispatch import return_and_correct_aliasing
 from torch.utils._pytree import tree_map
 
 from . import dtypes
@@ -255,22 +256,37 @@ def autocast_to_copy(aten_op, types, args, kwargs=None):
     tensor.
     """
     assert isinstance(args[0], MXTensor)
-    # print('before', args[0], args[0].dtype, args[0]._orig_dtype)
-    assert (
-        len(kwargs) == 1 and "dtype" in kwargs
-    ), "Only support dtype kwarg for autocast"
-    assert kwargs["dtype"] in {
-        torch.float16,
-        torch.bfloat16,
-    }, "Only support floating point conversion for autocast w/ MXTensor"
-    res = MXTensor(
-        args[0]._scale_e8m0,
-        args[0]._data,
-        args[0]._elem_dtype,
-        args[0]._block_size,
-        kwargs["dtype"],
-        args[0]._padding,
-        args[0]._block_dim,
-    )
-    # print('after', res, res.dtype, res._orig_dtype)
-    return res
+    # Handle dtype parameter
+    dtype = kwargs.pop("dtype", None)
+    if dtype is not None:
+        assert dtype in {
+            torch.float16,
+            torch.bfloat16,
+        }, "Only support floating point conversion for autocast w/ MXTensor"
+
+    # Handle device parameter
+    device = kwargs.pop("device", None)
+    if device is not None:
+        # Apply device change using _apply_fn_to_data
+        tensor = args[0]._apply_fn_to_data(lambda x: aten_op(x, device=device))
+        tensor = return_and_correct_aliasing(aten_op, args, {}, tensor)
+    else:
+        tensor = args[0]
+
+    # # Verify no other kwargs remain
+    # assert (
+    #     len(kwargs) == 0
+    # ), f"Only support dtype and device kwargs for autocast but has {kwargs.keys()}"
+
+    if dtype is not None:
+        res = MXTensor(
+            tensor._scale_e8m0,
+            tensor._data,
+            tensor._elem_dtype,
+            tensor._block_size,
+            dtype,
+            tensor._padding,
+            tensor._block_dim,
+        )
+        return res
+    return tensor

@@ -523,6 +523,19 @@ def test_dequantize_mx_registered(
         assert v == "SUCCESS", f"Failed for {k}: {v}"
 
 
+@pytest.mark.parametrize("elem_dtype", dtypes.SUPPORTED_ELEM_DTYPES)
+@pytest.mark.parametrize("device", ["cuda", "cpu"])
+def test_move_mx_tensor_to_device(elem_dtype: dtypes.DType, device: str):
+    if device == "cuda" and not __has_cuda:
+        pytest.skip("CUDA not available")
+    x = torch.randn(4, 8, dtype=torch.bfloat16, device="cpu")
+    block_size = 2
+    x_mx = MXTensor.to_mx(x, elem_dtype, block_size)
+    assert x_mx.device.type == "cpu", f"Expected cpu, got {x_mx._data.device.type}"
+    x_mx_new_device = x_mx.to(device)
+    assert x_mx_new_device.device.type == device
+
+
 def test_fp4_pack_unpack():
     orig_vals = torch.Tensor([[0.0, 0.5, 4.0, -0.0], [-0.0, 1.0, -6.0, 3.0]])
     orig_vals_f4_unpacked = f32_to_f4_unpacked(orig_vals)
